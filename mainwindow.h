@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+#include <QTime>
+#include <QDateTime>
+#include <QElapsedTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,5 +25,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QTimer *dataTimer;
+//    QSharedPointer *timeTicker;
+//    QCPAxisTickerTime *timeTicker;
 };
 #endif // MAINWINDOW_H
