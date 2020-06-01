@@ -14,7 +14,6 @@
 #include <QDebug>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "ad7190.h"
 
 /* Global objects */
 //SPI spi_device1;
@@ -41,23 +40,15 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Configure font settings for Label */
     QFont font;
     font.setPointSize(21);
-    font.setItalic(true);
-    font.setBold(true);
+    font.setPixelSize(true);
+//    font.setBold(true);
     ui->label_adc_data->setFont(font);
     ui->label_adc_data->setAlignment(Qt::AlignCenter);
     ui->label_adc_data->setStyleSheet("background-color : white; color : green;");
 
     /* Configure setup for Thank You Label */
     ui->label_ty->setAlignment(Qt::AlignCenter);
-    ui->label_ty->setStyleSheet("background-color : white; color : black;");
-
-    /* Thread to continously sample and read the data */
-//    QThread *thread = new QThread;
-//    AD7190 *ad7190_dev = new AD7190();
-//    ad7190_dev->moveToThread(thread);
-//    connect(thread,SIGNAL(started()),ad7190_dev,SLOT(AD7190_init_thread()));
-//    connect(ad7190_dev, SIGNAL(new_adc_data(ulong)),this,SLOT(display_data(ulong)));
-//    thread->start();
+    ui->label_ty->setStyleSheet("background-color : white; color : blue;");
 
     /* Add graph and set the curve line color to green */
     ui->CustomPlot->addGraph();
@@ -72,18 +63,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     /* Configure x and y-Axis to display Labels */
-    ui->CustomPlot->xAxis->setTickLabelFont(QFont(QFont().family(),8));
-    ui->CustomPlot->yAxis->setTickLabelFont(QFont(QFont().family(),8));
-    ui->CustomPlot->xAxis->setLabel("Time(s)");
-    ui->CustomPlot->yAxis->setLabel("ADC Raw Counts");
+    ui->CustomPlot->xAxis->setTickLabelFont(QFont(QFont().family(),6));
+    ui->CustomPlot->yAxis->setTickLabelFont(QFont(QFont().family(),6));
+    ui->CustomPlot->xAxis->setLabel("Время (с)");
 
     /* Make top and right axis visible, but without ticks and label */
     ui->CustomPlot->xAxis2->setVisible(true);
     ui->CustomPlot->yAxis->setVisible(true);
-    ui->CustomPlot->xAxis2->setTicks(false);
-    ui->CustomPlot->yAxis2->setTicks(false);
-    ui->CustomPlot->xAxis2->setTickLabels(false);
-    ui->CustomPlot->yAxis2->setTickLabels(false);
+
+    ui->CustomPlot->xAxis2->setLabelColor("background-color : white; color : blue;");
+    ui->CustomPlot->xAxis2->setTickLabelColor("color : yellow;");
+    ui->CustomPlot->xAxis2->setSelectedTickLabelColor("color : yellow;");
+    qDebug() << ui->CustomPlot->xAxis2->labelColor();
+    ui->CustomPlot->xAxis2->setTicks(false);//false
+    ui->CustomPlot->yAxis2->setTicks(false);//false
+    ui->CustomPlot->xAxis2->setTickLabels(false);//false
+    ui->CustomPlot->yAxis2->setTickLabels(false);//false
 
     /* Set up and initialize the graph plotting timer */
     connect(&timer_plot, SIGNAL(timeout()),this,SLOT(realtimePlot()));
@@ -93,28 +88,6 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-
-/****************************************************************
- * Function Name : display_data
- * Description   : Displays ADC data on the GUI
- * Returns       : None
- * Params        @adc_data: Data to be displayed
- ****************************************************************/
-void MainWindow::display_data()
-{
-//    генерируем рандомный лонг для отображения
-    unsigned long data = 1353;
-    /* Discard the noisy bits */
-//    adc_data = adc_data/100;
-
-    /* Support the plotter */
-    adc_data_g = data;//adc_data;
-
-    /* Prepare to display the data */
-    QString adc_data_str = " ";
-    adc_data_str = QString::number(data);
-    ui->label_adc_data->setText(adc_data_str);
 }
 
 /****************************************************************

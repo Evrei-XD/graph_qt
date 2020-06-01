@@ -31,7 +31,7 @@ private slots:
 
 public slots:
 //    void display_data(unsigned long adc_data);
-    void display_data();
+//    void display_data();
     void realtimePlot();
 
 

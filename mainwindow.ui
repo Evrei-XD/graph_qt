@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="cursor">
-   <cursorShape>BlankCursor</cursorShape>
+   <cursorShape>ArrowCursor</cursorShape>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string notr="true">MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QCustomPlot" name="CustomPlot" native="true">
@@ -27,7 +27,10 @@
      </rect>
     </property>
     <property name="cursor">
-     <cursorShape>BlankCursor</cursorShape>
+     <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="mouseTracking">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QLabel" name="label_adc_data">

@@ -5445,7 +5445,7 @@ public:
   
   inline double sortKey() const { return key; }
   inline static QCPBarsData fromSortKey(double sortKey) { return QCPBarsData(sortKey, 0); }
-  inline static bool sortKeyIsMainKey() { return true; } 
+  inline static bool sortKeyIsMainKey() { return true; }
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return value; }
@@ -5821,7 +5821,7 @@ public:
   
   inline double sortKey() const { return key; }
   inline static QCPFinancialData fromSortKey(double sortKey) { return QCPFinancialData(sortKey, 0, 0, 0, 0); }
-  inline static bool sortKeyIsMainKey() { return true; } 
+  inline static bool sortKeyIsMainKey() { return true; }
   
   inline double mainKey() const { return key; }
   inline double mainValue() const { return open; }

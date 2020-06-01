@@ -29,8 +29,6 @@ SOURCES += \
 
 HEADERS += \
         mainwindow.h \
-    spi.h \
-    ad7190.h \
     qcustomplot.h
 
 FORMS += \
