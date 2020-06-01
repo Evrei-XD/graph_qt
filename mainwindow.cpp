@@ -52,8 +52,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     /* Add graph and set the curve line color to green */
     ui->CustomPlot->addGraph();
-    ui->CustomPlot->graph(0)->setPen(QPen(Qt::red));
+    ui->CustomPlot->graph(0)->setPen(QPen(Qt::darkRed));
     ui->CustomPlot->graph(0)->setAntialiasedFill(false);
+    ui->CustomPlot->addGraph();
+    ui->CustomPlot->graph(1)->setPen(QPen(Qt::darkCyan));
+    ui->CustomPlot->graph(1)->setAntialiasedFill(true);
 
     /* Configure x-Axis as time in secs */
     QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
@@ -70,11 +73,6 @@ MainWindow::MainWindow(QWidget *parent) :
     /* Make top and right axis visible, but without ticks and label */
     ui->CustomPlot->xAxis2->setVisible(true);
     ui->CustomPlot->yAxis->setVisible(true);
-
-    ui->CustomPlot->xAxis2->setLabelColor("background-color : white; color : blue;");
-    ui->CustomPlot->xAxis2->setTickLabelColor("color : yellow;");
-    ui->CustomPlot->xAxis2->setSelectedTickLabelColor("color : yellow;");
-    qDebug() << ui->CustomPlot->xAxis2->labelColor();
     ui->CustomPlot->xAxis2->setTicks(false);//false
     ui->CustomPlot->yAxis2->setTicks(false);//false
     ui->CustomPlot->xAxis2->setTickLabels(false);//false
@@ -102,17 +100,21 @@ void MainWindow::realtimePlot()
     double key = time.elapsed()/1000.0;//100
     static double lastPointKey = 0;
     double data = 0;
+    double data2 = 0;
     if(key - lastPointKey > 0.033)//0.002
     {
         data = QRandomGenerator::global()->generateDouble();
+        data2 = QRandomGenerator::global()->generateDouble();
 //        qDebug() << QString::number(data);
 //        adc_data_g = data;
         ui->CustomPlot->graph(0)->addData(key, data);
+        ui->CustomPlot->graph(1)->addData(key, data2);
         lastPointKey = key;
     }
 
     /* make key axis range scroll right with the data at a constant range of 8. */
     ui->CustomPlot->graph(0)->rescaleValueAxis();
+    ui->CustomPlot->graph(1)->rescaleValueAxis();
     ui->CustomPlot->xAxis->setRange(key, 5, Qt::AlignRight);
     ui->CustomPlot->replot();
 }
